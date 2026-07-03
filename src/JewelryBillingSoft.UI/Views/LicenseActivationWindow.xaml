@@ -1,0 +1,59 @@
+<Window x:Class="JewelryBillingSoft.UI.Views.LicenseActivationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="License Activation - Jewelry Billing Soft"
+        Height="450" Width="500"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
+    <Grid Margin="30">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" HorizontalAlignment="Center" Margin="0,0,0,30">
+            <TextBlock Text="💎" FontSize="40" HorizontalAlignment="Center"/>
+            <TextBlock Text="Activate Your License" FontSize="22" FontWeight="Bold"
+                       HorizontalAlignment="Center" Margin="0,10,0,0"/>
+            <TextBlock Text="Enter your license key to activate Jewelry Billing Soft"
+                       Foreground="#888888" FontSize="13" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1">
+            <!-- License Status if exists -->
+            <Border Background="#FFF3CD" CornerRadius="8" Padding="15" Margin="0,0,0,20"
+                    Visibility="{Binding LicenseStatus, Converter={StaticResource NullToInverseVisibilityConverter}}">
+                <TextBlock Text="Your license has expired. Please renew." Foreground="#856404"/>
+            </Border>
+
+            <!-- Activation Message -->
+            <Border Background="#D4EDDA" CornerRadius="8" Padding="12" Margin="0,0,0,15"
+                    Visibility="{Binding ActivationMessage, Converter={StaticResource StringToVisibilityConverter}}">
+                <TextBlock Text="{Binding ActivationMessage}" Foreground="#155724"/>
+            </Border>
+
+            <TextBlock Text="Shop Name *" FontSize="12" Foreground="#666666"/>
+            <TextBox Text="{Binding ShopName}" Margin="0,5,0,15" Padding="12,10"/>
+
+            <TextBlock Text="Email" FontSize="12" Foreground="#666666"/>
+            <TextBox Text="{Binding Email}" Margin="0,5,0,15" Padding="12,10"/>
+
+            <TextBlock Text="License Key *" FontSize="12" Foreground="#666666"/>
+            <TextBox Text="{Binding LicenseKey}" Margin="0,5,0,5" Padding="12,10"
+                     FontFamily="Consolas" FontSize="14"/>
+            <TextBlock Text="Format: XXXX-XXXX-XXXX-XXXX" Foreground="#AAAAAA" FontSize="11" Margin="0,0,0,20"/>
+
+            <Button Content="🔑 Activate License" Command="{Binding ActivateCommand}"
+                    Style="{StaticResource PrimaryButtonStyle}"
+                    Height="44" FontSize="14" HorizontalAlignment="Stretch"/>
+        </StackPanel>
+
+        <TextBlock Grid.Row="2" Text="Contact support@jewelrysoft.com for license key"
+                   Foreground="#AAAAAA" FontSize="11" HorizontalAlignment="Center" Margin="0,20,0,0"/>
+    </Grid>
+</Window>
+

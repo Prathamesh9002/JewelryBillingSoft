@@ -1,0 +1,123 @@
+<UserControl x:Class="JewelryBillingSoft.UI.Views.CustomerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Grid Grid.Row="0" Margin="0,0,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Customer Management" FontSize="26" FontWeight="Bold" Foreground="#1A1A2E"/>
+            <Button Grid.Column="1" Content="+ Add Customer" Command="{Binding AddNewCommand}"
+                    Style="{StaticResource PrimaryButtonStyle}" Padding="20,10"/>
+        </Grid>
+
+        <!-- Search Bar -->
+        <Border Grid.Row="1" Style="{StaticResource CardStyle}" Padding="15" Margin="0,0,0,10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Grid.Column="0" Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}"
+                         Padding="12,8" BorderRadius="6"
+                         materialDesign:HintAssist.Hint="Search by name, mobile, or code..."
+                         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"/>
+                <Button Grid.Column="1" Content="🔍 Search" Command="{Binding SearchCommand}"
+                        Style="{StaticResource PrimaryButtonStyle}" Margin="10,0,0,0"/>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="350" x:Name="EditPanelColumn"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Customer List -->
+            <Border Grid.Column="0" Style="{StaticResource CardStyle}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Text="Customers" FontSize="16" FontWeight="Bold" Margin="0,0,0,10"/>
+
+                    <DataGrid Grid.Row="1" ItemsSource="{Binding Customers}"
+                              SelectedItem="{Binding SelectedCustomer}"
+                              IsReadOnly="True">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Code" Binding="{Binding CustomerCode}" Width="90"/>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
+                            <DataGridTextColumn Header="Mobile" Binding="{Binding Mobile}" Width="120"/>
+                            <DataGridTextColumn Header="City" Binding="{Binding City}" Width="100"/>
+                            <DataGridTextColumn Header="Total Purchases" Binding="{Binding TotalPurchaseAmount, StringFormat='₹{0:N0}'}" Width="130"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,10,0,0">
+                        <Button Content="✏️ Edit" Command="{Binding EditSelectedCommand}"
+                                Background="#2196F3" Foreground="White" BorderThickness="0"
+                                Padding="15,8" Cursor="Hand" Margin="0,0,10,0"/>
+                        <Button Content="🗑️ Delete" Command="{Binding DeleteSelectedCommand}"
+                                Background="#F44336" Foreground="White" BorderThickness="0"
+                                Padding="15,8" Cursor="Hand"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- Edit Panel -->
+            <Border Grid.Column="1" Style="{StaticResource CardStyle}"
+                    Visibility="{Binding IsEditing, Converter={StaticResource BoolToVisibilityConverter}}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <TextBlock Text="{Binding SelectedCustomer, Converter={StaticResource NullToStringConverter}, ConverterParameter='Add Customer|Edit Customer'}"
+                                   FontSize="16" FontWeight="Bold" Margin="0,0,0,20"/>
+
+                        <TextBlock Text="Name *" FontSize="12" Foreground="#666666"/>
+                        <TextBox Text="{Binding EditingCustomer.Name}" Margin="0,4,0,12"/>
+
+                        <TextBlock Text="Mobile *" FontSize="12" Foreground="#666666"/>
+                        <TextBox Text="{Binding EditingCustomer.Mobile}" Margin="0,4,0,12"/>
+
+                        <TextBlock Text="Alternate Mobile" FontSize="12" Foreground="#666666"/>
+                        <TextBox Text="{Binding EditingCustomer.AlternateMobile}" Margin="0,4,0,12"/>
+
+                        <TextBlock Text="Email" FontSize="12" Foreground="#666666"/>
+                        <TextBox Text="{Binding EditingCustomer.Email}" Margin="0,4,0,12"/>
+
+                        <TextBlock Text="Address" FontSize="12" Foreground="#666666"/>
+                        <TextBox Text="{Binding EditingCustomer.Address}" Margin="0,4,0,12" Height="60" AcceptsReturn="True"/>
+
+                        <TextBlock Text="City" FontSize="12" Foreground="#666666"/>
+                        <TextBox Text="{Binding EditingCustomer.City}" Margin="0,4,0,12"/>
+
+                        <TextBlock Text="State" FontSize="12" Foreground="#666666"/>
+                        <TextBox Text="{Binding EditingCustomer.State}" Margin="0,4,0,20"/>
+
+                        <StackPanel Orientation="Horizontal">
+                            <Button Content="💾 Save" Command="{Binding SaveCommand}"
+                                    Style="{StaticResource PrimaryButtonStyle}" Margin="0,0,10,0"/>
+                            <Button Content="Cancel" Command="{Binding CancelEditCommand}"
+                                    Background="#EEEEEE" BorderThickness="0" Padding="15,10" Cursor="Hand"/>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>
+
