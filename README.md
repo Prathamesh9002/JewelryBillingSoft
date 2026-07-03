@@ -188,6 +188,15 @@ This software is proprietary. Requires a valid license key for use.
 
 ---
 
+## 📖 Documentation
+
+| Document | Description |
+|----------|-------------|
+| [User Manual](docs/USER_MANUAL.md) | Complete guide on installation, activation, and using every feature |
+| [Database Setup](database/setup.sql) | SQL Server database setup script |
+
+---
+
 ## 📞 Support
 
 For license keys and support, contact: support@jewelrysoft.com
