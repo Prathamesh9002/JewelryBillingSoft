@@ -86,23 +86,23 @@ JewelryBillingSoft/
 
 ## 🚀 Getting Started
 
-### Prerequisites
-- Windows 10/11
-- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8)
-- [SQL Server Express](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) (LocalDB or named instance)
-- Visual Studio 2022 or VS Code
+### Quick Start (Automated)
 
-### Setup
+```powershell
+git clone https://github.com/Prathamesh9002/JewelryBillingSoft.git
+cd JewelryBillingSoft
+.\scripts\setup-local.ps1
+```
+
+### Manual Setup
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/prajput_RSCP/JewelryBillingSoft.git
+   git clone https://github.com/Prathamesh9002/JewelryBillingSoft.git
    cd JewelryBillingSoft
    ```
 
-2. **Configure connection string**
-   
-   Edit `src/JewelryBillingSoft.UI/appsettings.json`:
+2. **Configure connection string** in `src/JewelryBillingSoft.UI/appsettings.json`:
    ```json
    {
      "ConnectionStrings": {
@@ -111,23 +111,30 @@ JewelryBillingSoft/
    }
    ```
 
-3. **Install dependencies and run EF migrations**
+3. **Restore packages**
    ```bash
+   dotnet restore
+   ```
+
+4. **Run EF migrations** (creates the database)
+   ```bash
+   dotnet tool install --global dotnet-ef
    cd src/JewelryBillingSoft.Infrastructure
    dotnet ef migrations add InitialCreate --startup-project ../JewelryBillingSoft.UI
    dotnet ef database update --startup-project ../JewelryBillingSoft.UI
    ```
 
-4. **Build and Run**
+5. **Run the application**
    ```bash
    cd src/JewelryBillingSoft.UI
    dotnet run
    ```
 
-### First Launch
-1. **License Activation**: Use any 16+ character key (e.g., `DEMO-DEMO-DEMO-DEMO`)
-2. **Login**: `admin` / `Admin@123`
-3. Start billing!
+6. **First Launch**
+   - License: Enter any 16+ char key (e.g. `DEMO-DEMO-DEMO-DEMO1`) + shop name
+   - Login: `admin` / `Admin@123`
+
+> 📖 See [Local Setup Guide](docs/LOCAL_SETUP.md) for detailed instructions and troubleshooting.
 
 ---
 
@@ -192,8 +199,9 @@ This software is proprietary. Requires a valid license key for use.
 
 | Document | Description |
 |----------|-------------|
-| [User Manual](docs/USER_MANUAL.md) | Complete guide on installation, activation, and using every feature |
-| [Database Setup](database/setup.sql) | SQL Server database setup script |
+| [📘 User Manual](docs/USER_MANUAL.md) | Complete guide on installation, activation, and using every feature |
+| [🚀 Local Setup Guide](docs/LOCAL_SETUP.md) | Step-by-step guide to run the project on your local machine |
+| [🗄️ Database Setup](database/setup.sql) | SQL Server database setup script |
 
 ---
 
