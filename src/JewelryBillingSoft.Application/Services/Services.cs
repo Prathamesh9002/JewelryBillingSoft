@@ -37,9 +37,8 @@ public class CustomerService : ICustomerService
 
     public async Task<CustomerDto> CreateAsync(CreateCustomerDto dto)
     {
-        // Generate customer code
-        var allCustomers = await _unitOfWork.Customers.GetAllAsync();
-        var code = $"CUST{(allCustomers.Count() + 1):D4}";
+        // Generate unique customer code using timestamp to avoid conflicts
+        var code = $"CUST{DateTime.Now:yyMMddHHmmss}";
 
         var customer = new Customer
         {
@@ -160,8 +159,9 @@ public class InventoryService : IInventoryService
 
     public async Task<ProductDto> CreateAsync(CreateProductDto dto)
     {
-        var allProducts = await _unitOfWork.Products.GetAllAsync();
-        var code = $"{dto.MetalType.ToString()[0]}{(allProducts.Count() + 1):D4}";
+        // Generate unique item code using metal type prefix + timestamp
+        var prefix = dto.MetalType.ToString()[0];
+        var code = $"{prefix}{DateTime.Now:yyMMddHHmmss}";
 
         var product = new Product
         {
@@ -270,11 +270,13 @@ public class InventoryService : IInventoryService
 public class BillingService : IBillingService
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IAuthService _authService;
     private readonly ILogger<BillingService> _logger;
 
-    public BillingService(IUnitOfWork unitOfWork, ILogger<BillingService> logger)
+    public BillingService(IUnitOfWork unitOfWork, IAuthService authService, ILogger<BillingService> logger)
     {
         _unitOfWork = unitOfWork;
+        _authService = authService;
         _logger = logger;
     }
 
@@ -311,6 +313,7 @@ public class BillingService : IBillingService
             InvoiceNumber = invoiceNumber,
             InvoiceDate = dto.InvoiceDate,
             CustomerId = dto.CustomerId,
+            CreatedByUserId = _authService.CurrentUser?.Id,
             AdvanceReceived = dto.AdvanceReceived,
             Notes = dto.Notes,
             Status = InvoiceStatus.Draft
@@ -520,7 +523,7 @@ public class BillingService : IBillingService
         CustomerId = i.CustomerId,
         CustomerName = i.Customer?.Name ?? string.Empty,
         CustomerMobile = i.Customer?.Mobile ?? string.Empty,
-        CreatedByUserId = i.CreatedByUserId,
+        CreatedByUserId = i.CreatedByUserId ?? 0,
         CreatedByUserName = i.CreatedByUser?.FullName ?? string.Empty,
         SubTotal = i.SubTotal,
         TotalDiscount = i.TotalDiscount,

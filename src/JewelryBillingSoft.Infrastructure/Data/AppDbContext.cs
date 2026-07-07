@@ -87,7 +87,7 @@ public class AppDbContext : DbContext
             e.Property(x => x.PendingAmount).HasColumnType("decimal(18,2)");
             e.Property(x => x.RefundAmount).HasColumnType("decimal(18,2)");
             e.HasOne(x => x.Customer).WithMany(c => c.Invoices).HasForeignKey(x => x.CustomerId);
-            e.HasOne(x => x.CreatedByUser).WithMany().HasForeignKey(x => x.CreatedByUserId).OnDelete(DeleteBehavior.Restrict);
+            e.HasOne(x => x.CreatedByUser).WithMany().HasForeignKey(x => x.CreatedByUserId).OnDelete(DeleteBehavior.SetNull);
             e.HasQueryFilter(x => !x.IsDeleted);
         });
 
@@ -108,6 +108,7 @@ public class AppDbContext : DbContext
             e.Property(x => x.GSTPercentage).HasColumnType("decimal(5,2)");
             e.Property(x => x.GSTAmount).HasColumnType("decimal(18,2)");
             e.Property(x => x.TotalAmount).HasColumnType("decimal(18,2)");
+            e.Property(x => x.UnitPrice).HasColumnType("decimal(18,2)");
             e.HasOne(x => x.Invoice).WithMany(i => i.InvoiceItems).HasForeignKey(x => x.InvoiceId).OnDelete(DeleteBehavior.Cascade);
             e.HasOne(x => x.Product).WithMany(p => p.InvoiceItems).HasForeignKey(x => x.ProductId).OnDelete(DeleteBehavior.Restrict);
         });
@@ -135,6 +136,13 @@ public class AppDbContext : DbContext
             e.Property(x => x.Action).HasMaxLength(100);
             e.Property(x => x.EntityName).HasMaxLength(100);
             e.HasOne(x => x.User).WithMany(u => u.AuditLogs).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.SetNull);
+        });
+
+        // ShopSettings decimal types
+        modelBuilder.Entity<ShopSettings>(e =>
+        {
+            e.HasKey(x => x.Id);
+            e.Property(x => x.DefaultGSTRate).HasColumnType("decimal(5,2)");
         });
 
         // Seed Data

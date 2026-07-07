@@ -79,7 +79,7 @@ public class Invoice : BaseEntity
     public DateTime InvoiceDate { get; set; } = DateTime.Now;
     public int CustomerId { get; set; }
     public Customer? Customer { get; set; }
-    public int CreatedByUserId { get; set; }
+    public int? CreatedByUserId { get; set; }
     public User? CreatedByUser { get; set; }
     public decimal SubTotal { get; set; }
     public decimal TotalDiscount { get; set; }
