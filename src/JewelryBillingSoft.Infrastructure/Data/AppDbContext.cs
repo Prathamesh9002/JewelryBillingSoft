@@ -148,7 +148,7 @@ public class AppDbContext : DbContext
         {
             Id = 1,
             Username = "admin",
-            PasswordHash = "gGcG1J7LFqFiZABa0e2/JwKVh/NxqaXY7cjA1Lne8Bk=", // Admin@123
+            PasswordHash = "rD78UtFxiL064ofLhE+VHupqPXdiA6zn6Qr4sP5cHts=", // Admin@123
             FullName = "System Administrator",
             Email = "admin@jewelryshop.com",
             Mobile = "9999999999",
