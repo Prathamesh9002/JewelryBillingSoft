@@ -7,10 +7,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.IO;
 using System.Windows;
+using WpfApp = System.Windows.Application;
 
 namespace JewelryBillingSoft.UI;
 
-public partial class App : Application
+public partial class App : WpfApp
 {
     private ServiceProvider? _serviceProvider;
 

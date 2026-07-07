@@ -2,6 +2,7 @@ using JewelryBillingSoft.UI.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
 using System.Windows.Input;
+using WpfApplication = System.Windows.Application;
 
 namespace JewelryBillingSoft.UI.Views;
 
@@ -34,7 +35,7 @@ public partial class LoginWindow : Window
 
     private void CloseButton_Click(object sender, RoutedEventArgs e)
     {
-        Application.Current.Shutdown();
+        WpfApplication.Current.Shutdown();
     }
 
     protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
@@ -43,4 +44,3 @@ public partial class LoginWindow : Window
         DragMove();
     }
 }
-

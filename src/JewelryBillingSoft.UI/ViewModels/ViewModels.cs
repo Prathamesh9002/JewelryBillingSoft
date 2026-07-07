@@ -1,7 +1,9 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using JewelryBillingSoft.Application.Interfaces;
+using System.IO;
 using System.Windows;
+using WpfApplication = System.Windows.Application;
 
 namespace JewelryBillingSoft.UI.ViewModels;
 
@@ -201,7 +203,7 @@ public partial class MainViewModel : BaseViewModel
             await _authService.LogoutAsync();
             var loginWindow = App.Services.GetService(typeof(Views.LoginWindow)) as Views.LoginWindow;
             loginWindow?.Show();
-            Application.Current.Windows.OfType<Views.MainWindow>().FirstOrDefault()?.Close();
+            WpfApplication.Current.Windows.OfType<MainWindow>().FirstOrDefault()?.Close();
         }
     }
 

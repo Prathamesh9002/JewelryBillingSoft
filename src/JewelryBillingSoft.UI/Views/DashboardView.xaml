@@ -50,7 +50,7 @@
                                            FontSize="22" FontWeight="Bold" Foreground="#1A1A2E"/>
                             </StackPanel>
                         </StackPanel>
-                        <TextBlock Text="{Binding TodaysInvoices, StringFormat='{0} Invoices'}"
+                        <TextBlock Text="{Binding TodaysInvoices, StringFormat='{}{0} Invoices'}"
                                    Foreground="#888888" FontSize="12"/>
                     </StackPanel>
                 </Border>
@@ -117,7 +117,7 @@
                     <StackPanel>
                         <TextBlock Text="📦 Total Products" FontSize="14" FontWeight="SemiBold" Margin="0,0,0,8"/>
                         <TextBlock Text="{Binding TotalProducts}" FontSize="28" FontWeight="Bold" Foreground="#B8860B"/>
-                        <TextBlock Text="{Binding LowStockItems, StringFormat='{0} items low on stock'}"
+                        <TextBlock Text="{Binding LowStockItems, StringFormat='{}{0} items low on stock'}"
                                    Foreground="#FF9800" FontSize="12"/>
                     </StackPanel>
                 </Border>

@@ -31,7 +31,7 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <TextBox Grid.Column="0" Text="{Binding SearchTerm, UpdateSourceTrigger=PropertyChanged}"
-                         Padding="12,8" BorderRadius="6"
+                         Padding="12,8"
                          materialDesign:HintAssist.Hint="Search by name, mobile, or code..."
                          xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"/>
                 <Button Grid.Column="1" Content="🔍 Search" Command="{Binding SearchCommand}"

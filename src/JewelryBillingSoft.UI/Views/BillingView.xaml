@@ -62,6 +62,7 @@
             <!-- Right Panel: New Invoice or Invoice Details -->
             <Border Grid.Column="1" Style="{StaticResource CardStyle}">
                 <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <Grid>
                     <!-- New Invoice Form -->
                     <StackPanel Visibility="{Binding IsCreatingInvoice, Converter={StaticResource BoolToVisibilityConverter}}">
                         <TextBlock Text="New Invoice" FontSize="18" FontWeight="Bold" Margin="0,0,0,15"/>
@@ -247,6 +248,7 @@
                                    Margin="0,50,0,0"
                                    Visibility="{Binding CurrentInvoice, Converter={StaticResource NullToInverseVisibilityConverter}}"/>
                     </StackPanel>
+                    </Grid>
                 </ScrollViewer>
             </Border>
         </Grid>

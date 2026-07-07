@@ -1,6 +1,7 @@
 using JewelryBillingSoft.UI.ViewModels;
 using System.Windows;
 using System.Windows.Input;
+using WpfApplication = System.Windows.Application;
 
 namespace JewelryBillingSoft.UI;
 
@@ -27,7 +28,7 @@ public partial class MainWindow : Window
         MaximizeRestoreWindow();
 
     private void CloseButton_Click(object sender, RoutedEventArgs e) =>
-        Application.Current.Shutdown();
+        WpfApplication.Current.Shutdown();
 
     private void MaximizeRestoreWindow()
     {
@@ -36,4 +37,3 @@ public partial class MainWindow : Window
             : WindowState.Maximized;
     }
 }
-
