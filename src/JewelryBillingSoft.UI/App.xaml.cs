@@ -40,7 +40,7 @@ public partial class App : WpfApp
         catch (Exception ex)
         {
             MessageBox.Show(
-                $"Database initialization failed:\n{ex.Message}\n\nPlease ensure SQL Server Express is installed and running.",
+                $"Database initialization failed:\n{ex.Message}\n\nPlease check that the application data directory is writable.",
                 "Database Error",
                 MessageBoxButton.OK,
                 MessageBoxImage.Error);

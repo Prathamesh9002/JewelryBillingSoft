@@ -28,21 +28,21 @@ public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
         }
         else
         {
-            // Fallback to default SQL Server Express connection
+            // Fallback to a local SQLite database file
             config = new ConfigurationBuilder()
                 .AddInMemoryCollection(new Dictionary<string, string?>
                 {
-                    ["ConnectionStrings:DefaultConnection"] =
-                        "Server=.\\SQLEXPRESS;Database=JewelryBillingSoftDb;Trusted_Connection=True;TrustServerCertificate=True;"
+                    ["ConnectionStrings:DefaultConnection"] = "Data Source=jewelry_design.db"
                 })
                 .Build();
         }
 
-        var connectionString = config.GetConnectionString("DefaultConnection")
-            ?? "Server=.\\SQLEXPRESS;Database=JewelryBillingSoftDb;Trusted_Connection=True;TrustServerCertificate=True;";
+        var rawConnectionString = config.GetConnectionString("DefaultConnection")
+            ?? "Data Source=jewelry_design.db";
+        var connectionString = Environment.ExpandEnvironmentVariables(rawConnectionString);
 
         var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
-        optionsBuilder.UseSqlServer(connectionString);
+        optionsBuilder.UseSqlite(connectionString);
 
         return new AppDbContext(optionsBuilder.Options);
     }

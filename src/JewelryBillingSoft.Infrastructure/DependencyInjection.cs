@@ -12,14 +12,28 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+        // Resolve and expand the SQLite connection string (supports %APPDATA% etc.)
+        var rawConnectionString = configuration.GetConnectionString("DefaultConnection")
+            ?? "Data Source=jewelry.db";
+        var connectionString = Environment.ExpandEnvironmentVariables(rawConnectionString);
+
+        // Ensure the database directory exists
+        var dataSource = connectionString
+            .Split(';', StringSplitOptions.RemoveEmptyEntries)
+            .Select(p => p.Trim())
+            .FirstOrDefault(p => p.StartsWith("Data Source=", StringComparison.OrdinalIgnoreCase))
+            ?.Substring("Data Source=".Length)
+            .Trim();
+        if (!string.IsNullOrWhiteSpace(dataSource))
+        {
+            var dir = Path.GetDirectoryName(dataSource);
+            if (!string.IsNullOrWhiteSpace(dir))
+                Directory.CreateDirectory(dir);
+        }
+
         // Database
         services.AddDbContext<AppDbContext>(options =>
-            options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
-                sqlOptions =>
-                {
-                    sqlOptions.CommandTimeout(30);
-                    sqlOptions.EnableRetryOnFailure(3);
-                }));
+            options.UseSqlite(connectionString));
 
         // Repositories and Unit of Work
         services.AddScoped<IUnitOfWork, UnitOfWork>();
